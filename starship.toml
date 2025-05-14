@@ -28,6 +28,10 @@ $time\
 [ ](fg:#33658A)\
 """
 
+right_format = """
+$custom
+"""
+
 # Disable the blank line at the start of the prompt
 # add_newline = false
 
@@ -65,6 +69,14 @@ style = "bg:#DA627D"
 format = "[ $path ]($style)"
 truncation_length = 3
 truncation_symbol = "…/"
+
+[custom.ip]
+format = "[$symbol $output](bold blue)"
+description = "IP"
+symbol = '󰩠'
+when = """ test -n '$SSH_CLIENT' """
+command = "ip route get 1 | awk '{print $7; exit}'"
+style = "bg:#9A348E"
 
 # Here is how you can shorten some long paths by text replacement
 # similar to mapped_locations in Oh My Posh:
