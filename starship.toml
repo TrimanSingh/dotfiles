@@ -10,6 +10,7 @@ $git_branch\
 $git_status\
 [](fg:#FCA17D bg:#86BBD8)\
 $c\
+$python\
 $elixir\
 $elm\
 $golang\
@@ -56,6 +57,7 @@ Ubuntu = " "
 Debian = " "
 Android = " "
 Fedora = " "
+Macos = " "
 
 [shell]
 style = "bg:#9A348E"
@@ -75,7 +77,13 @@ format = "[$symbol $output](bold blue)"
 description = "IP"
 symbol = '󰩠'
 when = """ test -n '$SSH_CLIENT' """
-command = "ip route get 1 | awk '{print $7; exit}'"
+command = """
+if [ "$(uname)" = "Darwin" ]; then
+    ipconfig getifaddr en0
+elif [ "$(uname)" = "Linux" ]; then
+    ip route get 1 | awk '{print $7; exit}'
+fi
+"""
 style = "bg:#9A348E"
 
 # Here is how you can shorten some long paths by text replacement
@@ -91,10 +99,34 @@ style = "bg:#9A348E"
 # So either put "Important Documents" before "Documents" or use the substituted version:
 # "Important 󰈙 " = " 󰈙 "
 
+
+# Customize the claude-code profile
+[profiles]
+claude-code = "$claude_model$claude_context$claude_cost"
+
+# Configure individual modules
+[claude_model]
+format = "[$symbol$model]($style) "
+symbol = "🤖 "
+style = "bold blue"
+
+[claude_context]
+format = "[$gauge $percentage]($style) "
+gauge_width = 10
+
+[claude_cost]
+format = "[$symbol$cost]($style) "
+symbol = "💰 $"
+
+
 [c]
 symbol = " "
 style = "bg:#86BBD8"
 format = '[ $symbol ($version) ]($style)'
+
+[python]
+style = "bg:#86BBD8"
+format = '[ $symbol$version (\($virtualenv\) )]($style)'
 
 [docker_context]
 symbol = " "
@@ -145,7 +177,7 @@ style = "bg:#86BBD8"
 format = '[ $symbol ($version) ]($style)'
 
 [nodejs]
-symbol = ""
+symbol = ""
 style = "bg:#86BBD8"
 format = '[ $symbol ($version) ]($style)'
 
