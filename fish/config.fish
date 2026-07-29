@@ -7,7 +7,7 @@ if status is-interactive
 end
 
 starship init fish | source
-export STARSHIP_CONFIG=/mnt/c/Users/trima/.config/starship.toml
+#export STARSHIP_CONFIG=/mnt/c/Users/trima/.config/starship.toml
 
 alias ls='ls -l $argv'
 alias c='clear'
